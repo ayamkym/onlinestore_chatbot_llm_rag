@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="">
+
+    <title>{% block title %}Famms - Fashion HTML Template{% endblock %}</title>
+
+    <!-- Bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <!-- Font awesome style -->
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+    <!-- Responsive style -->
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+    {% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/chatbot.css' %}" type="text/css">
+    {% endblock %}
+</head>
+<body class="sub_page">
+    {% include 'partials/_navbar.html' %}
+
+    <!-- Main content -->
+    {% block content %}
+    <!-- Page-specific content goes here -->
+    {% endblock %}
+
+    {% include 'partials/_footer.html' %}
+<div class="chatbot-container">
+        <div class="chatbot-messages" id="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbot-input" placeholder="Type your message here...">
+            <button id="chatbot-send">Send</button>
+        </div>
+        <div id="loading-spinner" class="loading-spinner"></div>
+</div>
+<!--toogle button for chatbot-->
+<div class="chatbot-toggle">
+    <span>Chat</span>
+</div>
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <!-- Popper JS -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    {% block extra_js %}
+    <script src="{% static 'js/chatbot.js' %}"></script>
+    {% endblock %}
+
+</body>
+</html>
