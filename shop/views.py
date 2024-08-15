@@ -10,6 +10,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .ai import get_ai_response
+from django.http import HttpResponse
+from django.core.management import call_command
 
 def product_list_view(request):
     # Retrieve and order products
@@ -39,3 +41,10 @@ def get_chatbot_response(request):
 
         return JsonResponse({'response': response})
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+from django.http import HttpResponse
+from django.core.management import call_command
+
+def create_superuser_view(request):
+    call_command('create_superuser')
+    return HttpResponse('Superuser created')

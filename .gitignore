@@ -122,6 +122,8 @@ ENV/
 env.bak/
 venv.bak/
 
+
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -158,3 +160,8 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
+# Ignore build output directory (collected static files)
+staticfiles/
+
+# Do not ignore development static directory
+!static/
