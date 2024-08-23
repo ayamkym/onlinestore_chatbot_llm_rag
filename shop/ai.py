@@ -6,7 +6,7 @@ from langchain_community.vectorstores import FAISS
 from groq import Groq
 from decouple import config
 from dotenv import load_dotenv
-from threading import Lock
+from langchain_huggingface import HuggingFaceEmbeddings
 
 load_dotenv()
 
@@ -16,33 +16,20 @@ api_key = config('GROQ_API_KEY')
 # Initialize the Groq client with the API key
 client = Groq(api_key=api_key)
 
-# Path to save the embeddings
-EMBEDDINGS_FILE = os.path.join(os.path.dirname(__file__), "embeddings.pkl")
-
-# Cache for the vector store
-vectorstore_cache = None
-cache_lock = Lock()
-
-def load_vectorstore():
-    """
-    Load the vector store from the pre-saved embeddings file.
-    """
-    if not os.path.exists(EMBEDDINGS_FILE):
-        raise FileNotFoundError(f"{EMBEDDINGS_FILE} not found. Ensure the file is present in the deployment environment.")
-    
-    with open(EMBEDDINGS_FILE, 'rb') as f:
-        vectorstore = pickle.load(f)
-    return vectorstore
+# Define the embedding model
+embedding_model_id = "BAAI/bge-small-en-v1.5"
+embeddings = HuggingFaceEmbeddings(model_name=embedding_model_id)
 
 def get_vectorstore():
     """
-    Get the vector store from cache or load it if not cached.
+    Load the FAISS vector store from the local file system.
     """
-    global vectorstore_cache
-    with cache_lock:
-        if vectorstore_cache is None:
-            vectorstore_cache = load_vectorstore()
-    return vectorstore_cache
+    try:
+        return FAISS.load_local("./db/faiss_index", embeddings, allow_dangerous_deserialization=True)
+    except Exception as e:
+        print(f"Error loading FAISS index: {e}")
+        return None
+
 
 def initialize_qa_chain(vectorstore):
     """

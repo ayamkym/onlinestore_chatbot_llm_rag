@@ -1,7 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 class Product(models.Model):
     name = models.CharField(max_length=255)  # Product name
@@ -25,7 +23,3 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-@receiver(post_save, sender=Product)
-def update_embeddings(sender, instance, **kwargs):
-    from .embedding_utils import create_and_save_vectorstore
-    create_and_save_vectorstore()
